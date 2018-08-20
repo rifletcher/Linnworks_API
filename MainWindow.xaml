@@ -1,0 +1,82 @@
+﻿<Window x:Class="Linnworks_API.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Linnworks_API.ViewModel"
+        xmlns:local="clr-namespace:Linnworks_API"
+        mc:Ignorable="d"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!--Application ID-->
+            <RowDefinition Height="Auto"/>
+            <!--Application Secret-->
+            <RowDefinition Height="Auto"/> 
+            <!--Application Secret-->
+            <RowDefinition Height="Auto"/>
+            <!--CallAuthorizatin-->
+            <RowDefinition Height="Auto"/>
+            <!--Authorizatin Token-->            
+            <RowDefinition Height="Auto"/>
+            <!--Server-->
+            <RowDefinition Height="Auto"/>
+            <!--CallGetPostServices-->
+            <RowDefinition Height="Auto"/>
+            <!--PostServices Grid -->
+            <RowDefinition Height="*"/>
+            <!--CallGetAllOrders-->
+            <RowDefinition Height="Auto"/>
+            <!--OrderList-->
+            <RowDefinition Height="*"/>
+            <!--SetOrderDetails-->
+            <RowDefinition Height="Auto"/>
+            <!--CallSetOrderDetails-->
+            <RowDefinition Height="Auto"/>
+            <!--OrderDetails Grid-->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Application Id" Grid.Column="0" Grid.Row="0"></Label>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ApplicationId}"></TextBox>
+        <Label Content="Application Secret" Grid.Column="0" Grid.Row="1" ></Label>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding ApplicationSecret}"></TextBox>
+        <Label Content="Token" Grid.Column="0" Grid.Row="2" ></Label>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Token}"></TextBox>
+        <Button Content="Call Authorization API" Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding CallGetTokenCommand}"/>
+        <Label Content="Authorization Token" Grid.Column="0" Grid.Row="4" ></Label>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding AuthorizationToken}"></TextBox>
+        <Label Content="Server" Grid.Column="0" Grid.Row="5" ></Label>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Server}"></TextBox>
+        <Button Content="Call GetPostalServices" Grid.Row="6" Grid.ColumnSpan="2" Command="{Binding CallGetPostalServicesCommand}"/>
+        <Grid Grid.Row="7" Grid.ColumnSpan="2">
+            <DataGrid  ItemsSource="{Binding PostalServiceList}" AutoGenerateColumns="True"/>
+        </Grid>
+        <Button Content="Call GetAllOrders API" Grid.Row="8" Grid.ColumnSpan="2" Command="{Binding CallGetAllOrdersCommand}"/>
+        <Grid Grid.Row="9" Grid.ColumnSpan="2">
+            <DataGrid  ItemsSource="{Binding OrderList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="NumOrderId" Binding="{Binding NumOrderId}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PackageCode" Binding="{Binding ShippingInfo.PackageCategory}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <StackPanel Grid.Row="10" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Label Content="Carrier"></Label>
+            <TextBox Text="{Binding Carrier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Label Content="Service Code" ></Label>
+            <TextBox Text="{Binding ServiceCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Label Content="Tracking Number" ></Label>
+            <TextBox Text="{Binding TrackingNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </StackPanel>
+        <Button Content="Call SetOrderShipping API" Grid.Row="11" Grid.ColumnSpan="2" Command="{Binding CallSetOrderShippingInfoCommand}"/>
+        <Grid Grid.Row="12" Grid.ColumnSpan="2">
+            <DataGrid  ItemsSource="{Binding SetOrderResponse}" AutoGenerateColumns="True"/>
+        </Grid>
+    </Grid>
+</Window>
